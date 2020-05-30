@@ -1,0 +1,495 @@
+[
+    {
+        "id": "798a6fbc.f7dda",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b1b11140.4e4ef",
+        "type": "inject",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 200,
+        "y": 160,
+        "wires": [
+            [
+                "f2f2649a.0d0d98"
+            ]
+        ]
+    },
+    {
+        "id": "f2f2649a.0d0d98",
+        "type": "debug",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 910,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "dc7222e5.e6b1c",
+        "type": "ibmiot in",
+        "z": "798a6fbc.f7dda",
+        "authentication": "apiKey",
+        "apiKey": "f7a42a0f.87fcc8",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "0987654321",
+        "applicationId": "",
+        "deviceType": "rasberrypidevice",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": "",
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "25ba77c6.1ce808",
+                "756016cf.3a8308",
+                "1a89a3da.00d6fc"
+            ]
+        ]
+    },
+    {
+        "id": "25ba77c6.1ce808",
+        "type": "function",
+        "z": "798a6fbc.f7dda",
+        "name": "Temperature",
+        "func": "global.set('temperature',msg.payload.Temperature)\nmsg.payload=msg.payload.Temperature\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 80,
+        "wires": [
+            [
+                "73244880.9c0b28",
+                "f2f2649a.0d0d98"
+            ]
+        ]
+    },
+    {
+        "id": "756016cf.3a8308",
+        "type": "function",
+        "z": "798a6fbc.f7dda",
+        "name": "Humidity",
+        "func": "global.set('humidity',msg.payload.Humidity)\nmsg.payload=msg.payload.Humidity\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 260,
+        "wires": [
+            [
+                "38316155.ce478e",
+                "f2f2649a.0d0d98"
+            ]
+        ]
+    },
+    {
+        "id": "1a89a3da.00d6fc",
+        "type": "function",
+        "z": "798a6fbc.f7dda",
+        "name": "Gas",
+        "func": "global.set('gas',msg.payload.Gas_threshold)\nmsg.payload=msg.payload.Gas_threshold\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 360,
+        "wires": [
+            [
+                "f2f2649a.0d0d98",
+                "bbf38b2d.505768"
+            ]
+        ]
+    },
+    {
+        "id": "73244880.9c0b28",
+        "type": "ui_gauge",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "group": "c3b97748.874788",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "80",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 850,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "38316155.ce478e",
+        "type": "ui_gauge",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "group": "c3b97748.874788",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 880,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "d0cdf123.ad191",
+        "type": "ui_button",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "group": "dae71b7d.e89dc8",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "FAN OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"command\":\"FAN OFF\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 220,
+        "y": 640,
+        "wires": [
+            [
+                "bc341f96.2720e",
+                "cd1c7d3a.02822"
+            ]
+        ]
+    },
+    {
+        "id": "50f66e04.81815",
+        "type": "ui_button",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "group": "dae71b7d.e89dc8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "SPRINKLER ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"command\":\"SPRINKLER ON\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 230,
+        "y": 700,
+        "wires": [
+            [
+                "bc341f96.2720e",
+                "cd1c7d3a.02822"
+            ]
+        ]
+    },
+    {
+        "id": "e9f210d3.a9ade",
+        "type": "ui_button",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "group": "dae71b7d.e89dc8",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "SPRINKLER OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"command\":\"SPRINKLER OFF\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 230,
+        "y": 760,
+        "wires": [
+            [
+                "bc341f96.2720e",
+                "cd1c7d3a.02822"
+            ]
+        ]
+    },
+    {
+        "id": "896d4e61.496ac",
+        "type": "ui_button",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "group": "dae71b7d.e89dc8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "FAN ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"command\":\"FAN ON\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 240,
+        "y": 600,
+        "wires": [
+            [
+                "bc341f96.2720e",
+                "cd1c7d3a.02822"
+            ]
+        ]
+    },
+    {
+        "id": "bc341f96.2720e",
+        "type": "ibmiot out",
+        "z": "798a6fbc.f7dda",
+        "authentication": "apiKey",
+        "apiKey": "f7a42a0f.87fcc8",
+        "outputType": "cmd",
+        "deviceId": "0987654321",
+        "deviceType": "rasberrypidevice",
+        "eventCommandType": "home",
+        "format": "json",
+        "data": "data",
+        "qos": 0,
+        "name": "IBM IoT",
+        "service": "registered",
+        "x": 740,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "bbf38b2d.505768",
+        "type": "ui_gauge",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "group": "dae71b7d.e89dc8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Gas",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "150",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 890,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "560a2775.1dc688",
+        "type": "http in",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "url": "/sensor",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 400,
+        "wires": [
+            [
+                "8144d598.5d4f18"
+            ]
+        ]
+    },
+    {
+        "id": "7f1bde5.6fa5b2",
+        "type": "http response",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 710,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "cd1c7d3a.02822",
+        "type": "debug",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 750,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "8144d598.5d4f18",
+        "type": "function",
+        "z": "798a6fbc.f7dda",
+        "name": "data",
+        "func": "msg.payload={'temperature':global.get(\"temperature\"),'humidity':global.get(\"humidity\"),'gas':global.get(\"gas\")}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 420,
+        "wires": [
+            [
+                "7f1bde5.6fa5b2"
+            ]
+        ]
+    },
+    {
+        "id": "1c54da63.37f366",
+        "type": "http in",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "url": "/command",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 320,
+        "y": 520,
+        "wires": [
+            [
+                "c656fae4.bd6da8"
+            ]
+        ]
+    },
+    {
+        "id": "450d4bd6.9de9c4",
+        "type": "http response",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 670,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "c656fae4.bd6da8",
+        "type": "function",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 520,
+        "wires": [
+            [
+                "450d4bd6.9de9c4",
+                "b6d8adb1.39c46"
+            ]
+        ]
+    },
+    {
+        "id": "b6d8adb1.39c46",
+        "type": "debug",
+        "z": "798a6fbc.f7dda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 800,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "f7a42a0f.87fcc8",
+        "type": "ibmiot",
+        "z": "",
+        "name": "",
+        "keepalive": "60",
+        "serverName": "",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "c3b97748.874788",
+        "type": "ui_group",
+        "z": "",
+        "name": "Default",
+        "tab": "432d9146.03115",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "dae71b7d.e89dc8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Default",
+        "tab": "432d9146.03115",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "432d9146.03115",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
